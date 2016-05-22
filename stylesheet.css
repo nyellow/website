@@ -1,0 +1,88 @@
+body {
+	background-image: url('./images/greenCup.png');
+	background-color: #ACB29C;
+	color: black;
+	font-family: helvetica, arial, sans-serif;
+}
+
+#wrapper {
+	margin: 0 auto;
+	min-height: 576px;
+	width: 1024px;
+	padding: 25px;
+	background-color: white;
+}
+
+#header {
+	width: 960px;
+	height: 117px;
+	background-color: #D3D9C4;
+	margin: inherit;
+	border: 2px solid black;
+}
+
+#directory {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.directorylinks {
+	font-size: 20px;
+	color: black;
+	text-decoration: none;
+	margin-left: 16x;
+	margin-right: 16px;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#backgroundselect {
+	position: relative;
+	bottom: 100px;
+	left: 5px;
+}
+
+#background1 {
+	background-color: white;
+	width: 20px;
+	height: 20px;
+}
+
+#background2 {
+	background-image: url('./images/greenCup.png');
+	width: 20px;
+	height: 20px;
+}
+
+#background3 {
+	background-image: url('./images/stressedLinen.png');
+	width: 20px;
+	height: 20px;
+}
+
+.directlist {
+	text-align: center;
+	margin: auto;
+	margin-top: 50px;
+	display: none;
+}
+
+#datboi {
+	width: 180px;
+}
+
+#manatee {
+	width: 640px;
+}
+
+#calc {
+	width: 360px;
+}
+
+#calc table tr td {
+	position: relative;
+	left: 90px;
+	margin: 0 auto;
+}
