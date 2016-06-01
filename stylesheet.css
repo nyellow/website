@@ -4,13 +4,25 @@ body {
 	color: black;
 	font-family: helvetica, arial, sans-serif;
 }
-
 #wrapper {
 	margin: 0 auto;
 	min-height: 576px;
 	width: 1024px;
 	padding: 25px;
 	background-color: white;
+}
+
+#logReg {
+	text-decoration: none;
+	color: black;
+	margin-right: 5px;
+	margin-top: 5px;
+	float: right;
+	clear: left;
+}
+
+#logReg:hover {
+	text-decoration: underline;
 }
 
 #header {
@@ -22,16 +34,23 @@ body {
 }
 
 #directory {
+	position: absolute;
+	height: 125px;
+	width: 400px;
 	text-align: center;
-	margin: 0 auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: 20px auto 0;
 }
 
 .directorylinks {
 	font-size: 20px;
 	color: black;
 	text-decoration: none;
-	margin-left: 16x;
-	margin-right: 16px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
 a:hover {
@@ -39,9 +58,11 @@ a:hover {
 }
 
 #backgroundselect {
-	position: relative;
-	bottom: 100px;
-	left: 5px;
+	position: absolute;
+	clear: right;
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px;
 }
 
 #background1 {
@@ -85,4 +106,22 @@ a:hover {
 	position: relative;
 	left: 90px;
 	margin: 0 auto;
+}
+
+/* login.php */
+
+#loginRegWrapper {
+	margin: auto;
+	margin-top: 50px;
+	width: 500px;
+}
+
+#loginCSS {
+	width: 200px;
+	float: left;
+}
+
+#regCSS {
+	width: 200px;
+	float: right;
 }
