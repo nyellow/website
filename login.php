@@ -18,7 +18,7 @@
 			</div>
 			<div id="loginRegWrapper">
 				<div id="loginCSS">
-					<form method="post" action="login.php">
+					<form method="post">
 						<fieldset>
 							<legend>Login</legend>
 							Username: <input type="text" name="usernameLogin" size=16><br><br>
@@ -33,7 +33,7 @@
 							<legend>Register</legend>
 							Username: <input type="text" name="usernameReg" size=16><br><br>
 							Password: <input type="password" name="passwordReg" size=16><br><br>
-							<input type="submit" name="register" vwalue="Register">
+							<input type="submit" name="register" value="Register">
 						</fieldset>
 					</form>
 				</div>
@@ -45,32 +45,20 @@
 <?php
 	$username = "root";
 	$password = "";
-	$datebase = "zavoky";
+	$database = "zavoky";
 	$server = "localhost";
 	
-	$link = mysql_connect("$server", "$username", "$password");
+	$link = mysqli_connect($server, $username, $password, $database);
+	
 	if (!$link){
-		die('Could not connect: ' . mysql_error());
+		die('Could not connect');
 	}
 
-	echo 
+	if (isset($_POST['register'])) {
 		
-	mysql_select_db("$database");
-	
-	$username = $_POST["usernameReg"];
-	$password = $_POST["passwordReg"];
-	
-	$order = "INSERT INTO users
-			(username, password)
-			VALUES
-			('$username',
-			'$password')";
-	
-	$result = mysql_query($order);
-	
-	if($result){
-		echo("<br>Input data is successful");
-	} else{
-		echo("<br>Input data is fail");
-	}
+		$user = $_POST['usernameReg'];
+		$pass = $_POST['passwordReg'];
+		$order = "INSERT INTO users (username, password) VALUES ('$user', '$pass');";
+		$result = mysqli_query($link, $order);
+		}
 ?>
