@@ -38,6 +38,7 @@
 					</form>
 				</div>
 			</div>
+			<p id="logRegResult"></p>
 		</div>
 	</body>
 </html>
@@ -48,17 +49,27 @@
 	$database = "zavoky";
 	$server = "localhost";
 	
-	$link = mysqli_connect($server, $username, $password, $database);
+	$connection = mysqli_connect($server, $username, $password, $database);
 	
-	if (!$link){
+	if (!$connection){
 		die('Could not connect');
 	}
 
 	if (isset($_POST['register'])) {
-		
 		$user = $_POST['usernameReg'];
 		$pass = $_POST['passwordReg'];
-		$order = "INSERT INTO users (username, password) VALUES ('$user', '$pass');";
-		$result = mysqli_query($link, $order);
+		
+		// check if username is taken
+		$dupeCheckSQL = "SELECT * FROM users WHERE (username = '$user');";
+		$dupeCheck = mysqli_query($connection, $dupeCheckSQL);
+		if (mysqli_num_rows($dupeCheck) > 0) {
+			echo "<script> logRegResult('dupe'); </script>";
+			die();
+		}
+		
+		// insert data into table
+		$registerSQL = "INSERT INTO users (username, password) VALUES ('$user', '$pass');";
+		mysqli_query($connection, $registerSQL);
+		echo "<script> logRegResult('regSuccess'); </script>";
 		}
 ?>

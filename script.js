@@ -65,3 +65,20 @@ function calc() {
 			input1.focus();
 	} 
 }
+
+function logRegResult(cond) {
+	var output = document.getElementById("logRegResult");
+	switch (cond) {
+		case "dupe":
+			output.innerHTML = "Username already exists";
+			break;
+		case "regSuccess":
+			output.innerHTML = "Registration successful"; 
+			break;
+		case "logFail": 
+			output.innerHTML = "Incorrect login info"; 
+			break;
+		default: 
+			output.innerHTML = ":^)";
+	}
+}
