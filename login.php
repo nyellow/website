@@ -28,12 +28,12 @@
 					</form>
 				</div>
 				<div id="regCSS">
-					<form method="post" name="regForm">
+					<form method="post">
 						<fieldset>
 							<legend>Register</legend>
 							Username: <input type="text" name="usernameReg" size=16><br><br>
 							Password: <input type="password" name="passwordReg" size=16><br><br>
-							<input type="submit" value="Register">
+							<input type="submit" name="register" vwalue="Register">
 						</fieldset>
 					</form>
 				</div>
@@ -43,10 +43,10 @@
 </html>
 
 <?php
-	$username = "nathan";
-	$password = "Perry1m2";
+	$username = "root";
+	$password = "";
 	$datebase = "zavoky";
-	$server = "zavoky.com:80";
+	$server = "localhost";
 	
 	$link = mysql_connect("$server", "$username", "$password");
 	if (!$link){
