@@ -25,6 +25,13 @@ body {
 	text-decoration: underline;
 }
 
+#welcomeWrapper {
+	margin-top: 50px;
+	margin-right: 5px;
+	float: right;
+	clear: right;
+}
+
 #header {
 	width: 960px;
 	height: 117px;

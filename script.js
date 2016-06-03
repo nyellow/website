@@ -78,6 +78,9 @@ function logRegResult(cond) {
 		case "logFail": 
 			output.innerHTML = "Incorrect login info"; 
 			break;
+		case "empty":
+			output.innerHTML = "Fields can't be empty";
+			break;
 		default: 
 			output.innerHTML = ":^)";
 	}
