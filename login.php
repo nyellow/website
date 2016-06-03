@@ -23,7 +23,7 @@
 							<legend>Login</legend>
 							Username: <input type="text" name="usernameLogin" size=16><br><br>
 							Password: <input type="password" name="passwordLogin" size=16><br><br>
-							<input type="submit" value="Login">
+							<input type="submit" name="login" value="Login">
 						</fieldset>
 					</form>
 				</div>
@@ -55,6 +55,7 @@
 		die('Could not connect');
 	}
 
+	// check if fields are empty
 	if (isset($_POST['register'])) {
 		$user = $_POST['usernameReg'];
 		$pass = $_POST['passwordReg'];
@@ -68,8 +69,25 @@
 		}
 		
 		// insert data into table
-		$registerSQL = "INSERT INTO users (username, password) VALUES ('$user', '$pass');";
+		$registerSQL = "INSERT INTO users (uuid, username, password) VALUES (uuid(), '$user', '$pass');";
 		mysqli_query($connection, $registerSQL);
 		echo "<script> logRegResult('regSuccess'); </script>";
+	}
+	else if (isset($_POST['login'])) {
+		$user = $_POST['usernameLogin'];
+		$pass = $_POST['passwordLogin'];
+		
+		// check if entered data is correct
+		$LoginCheckSQL = "SELECT * FROM users WHERE username = '$user' AND BINARY password = '$pass';";
+		$LoginCheck = mysqli_query($connection, $LoginCheckSQL);
+		
+		if (mysqli_num_rows($LoginCheck) == 1) {
+			$cookieValue = $user;
+			setcookie("loggedIn", $cookieValue, time()+3600, "/");
+			header("Location: /");
 		}
+		else {
+			echo "<script> logRegResult('logFail'); </script>";
+		}
+	}
 ?>

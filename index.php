@@ -9,6 +9,10 @@
 		<div id="wrapper">
 			<div id="header">
 				<a id="logReg" href="./login">Login / Register </a>
+				<div id="welcomeWrapper">
+					<span id="welcome"></span>
+					<span><?=$_COOKIE["loggedIn"];?></span>
+				</div>
 				<div id="backgroundselect">
 					<button id="background1" onclick="bgselect('white');"></button>
 					<button id="background2" onclick="bgselect('greenCup');"></button>
@@ -55,3 +59,14 @@
 		</div>
 	</body>
 </html>
+
+<?php
+	if (isset($_COOKIE["loggedIn"])) {
+		$cookieValue = $_COOKIE["loggedIn"];
+		echo "<script>
+				document.getElementById('welcome').innerHTML = 'Welcome '
+				document.getElementById('logReg').innerHTML = 'Logout';
+				document.getElementById('logReg').href = './logout';
+			</script>";
+	}
+?>
