@@ -48,11 +48,14 @@
 	$password = "";
 	$database = "zavoky";
 	$server = "localhost";
-	
-	$connection = mysqli_connect($server, $username, $password, $database);
-	
-	if (!$connection){
-		die('Could not connect');
+
+	try {
+		$connection = new PDO('mysql:host=localhost;dbname=zavoky', $username, $password);
+		$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch (PDOException $e) {
+		echo "Error: ", $e->getMessage(), "<br/>";
+		die();
 	}
 
 	// check if fields are empty
@@ -60,17 +63,19 @@
 		$user = $_POST['usernameReg'];
 		$pass = $_POST['passwordReg'];
 		
+		// prepared statement to prevent SQL injection
 		// check if username is taken
-		$dupeCheckSQL = "SELECT * FROM users WHERE (username = '$user');";
-		$dupeCheck = mysqli_query($connection, $dupeCheckSQL);
-		if (mysqli_num_rows($dupeCheck) > 0) {
+		$dupeCheckSQL = $connection->prepare("SELECT * FROM users WHERE username = :user;");
+		$dupeCheckSQL->execute(array('user' => $user));
+		
+		if ($dupeCheckSQL->rowcount() > 0) {
 			echo "<script> logRegResult('dupe'); </script>";
 			die();
 		}
-		
+
 		// insert data into table
-		$registerSQL = "INSERT INTO users (uuid, username, password) VALUES (uuid(), '$user', '$pass');";
-		mysqli_query($connection, $registerSQL);
+		$registerSQL = $connection->prepare("INSERT INTO users (uuid, username, password) VALUES (uuid(), :user, :pass);");
+		$registerSQL->execute(array('user' => $user, 'pass' => $pass));
 		echo "<script> logRegResult('regSuccess'); </script>";
 	}
 	else if (isset($_POST['login'])) {
@@ -78,10 +83,10 @@
 		$pass = $_POST['passwordLogin'];
 		
 		// check if entered data is correct
-		$LoginCheckSQL = "SELECT * FROM users WHERE username = '$user' AND BINARY password = '$pass';";
-		$LoginCheck = mysqli_query($connection, $LoginCheckSQL);
+		$LoginCheckSQL = $connection->prepare("SELECT * FROM users WHERE username = :user AND BINARY password = :pass");
+		$LoginCheckSQL->execute(array('user' => $user, 'pass' => $pass));
 		
-		if (mysqli_num_rows($LoginCheck) == 1) {
+		if ($LoginCheckSQL->rowcount() == 1) {
 			$cookieValue = $user;
 			setcookie("loggedIn", $cookieValue, time()+3600, "/");
 			header("Location: /");
