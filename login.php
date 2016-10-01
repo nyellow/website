@@ -45,7 +45,7 @@
 
 <?php
 	$username = "root";
-	$password = "";
+	$password = "Perry1m2";
 	$database = "zavoky";
 	$server = "localhost";
 
@@ -60,8 +60,11 @@
 
 	// check if fields are empty
 	if (isset($_POST['register'])) {
+	echo "<script>console.log('lmao')</script>;";
 		$user = $_POST['usernameReg'];
 		$pass = $_POST['passwordReg'];
+		$date = date('Y-m-d H:i:s');
+		$passHash = password_hash($pass, PASSWORD_DEFAULT);
 		
 		// prepared statement to prevent SQL injection
 		// check if username is taken
@@ -74,19 +77,24 @@
 		}
 
 		// insert data into table
-		$registerSQL = $connection->prepare("INSERT INTO users (uuid, username, password) VALUES (uuid(), :user, :pass);");
-		$registerSQL->execute(array('user' => $user, 'pass' => $pass));
+		try {
+			$registerSQL = $connection->prepare("INSERT INTO users (uuid, username, password, datetime) VALUES (uuid(), :user, :passHash, :date);");
+			$registerSQL->execute(array('user' => $user, 'passHash' => $passHash, 'date' => $date));
+		} catch (PDOException $e) {
+			echo "Error: ", $e->getMessage(), "<br/>";
+		}
 		echo "<script> logRegResult('regSuccess'); </script>";
 	}
 	else if (isset($_POST['login'])) {
 		$user = $_POST['usernameLogin'];
 		$pass = $_POST['passwordLogin'];
+		$passHash = password_hash($pass, PASSWORD_DEFAULT);
 		
-		// check if entered data is correct
-		$LoginCheckSQL = $connection->prepare("SELECT * FROM users WHERE username = :user AND BINARY password = :pass");
-		$LoginCheckSQL->execute(array('user' => $user, 'pass' => $pass));
-		
-		if ($LoginCheckSQL->rowcount() == 1) {
+		$LoginCheckSQL = $connection->prepare("SELECT * FROM users WHERE username = :user");
+		$LoginCheckSQL->execute(array('user' => $user));
+
+		if ($LoginCheckSQL->rowcount() == 1 
+			&& password_verify($pass, $passHash)) {
 			$cookieValue = $user;
 			setcookie("loggedIn", $cookieValue, time()+3600, "/");
 			header("Location: /");
