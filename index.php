@@ -20,23 +20,9 @@
 				</div>
 				<div id="directory">
 					<h1>Directory</h1>
-						<a class="directorylinks" href="javascript:;" onclick="reveal('datboi');">datboi</a> 
 						<a class="directorylinks" href="javascript:;" onclick="reveal('manatee');">manatee</a>
 						<a class="directorylinks" href="javascript:;" onclick="reveal('calc');">calc</a>
-					<!-- <p><button id="b8" onclick="baited()">Click me</button></p> -->
 				</div>
-			</div>
-			
-			<div class="directlist" id="datboi">
-				<h1>nice meme</h1>
-				<img src="./images/datboi.jpg" height=150 width=150/>
-				<a href="http://reddit.com/r/datboi">
-					<p> its dat boi</p>
-				</a>
-				<a href="http://reddit.com/r/datboi">
-					<p> oh shit waddup</p>
-				</a>
-				<p> rip pepe</p>
 			</div>
 			
 			<div class="directlist" id="manatee">
